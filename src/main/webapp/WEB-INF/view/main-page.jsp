@@ -13,33 +13,6 @@
     <title>Strona główna</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/blog/">
-
-    <!-- Bootstrap core CSS -->
-    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="blog.css" rel="stylesheet">
 </head>
 <body>
 
@@ -48,7 +21,7 @@
     <form:form action="${pageContext.request.contextPath}/logout" method="post">
         <input type="submit" value="Logout" class="btn btn-default btn-sm">
     </form:form>
-    <form:form action="${pageContext.request.contextPath}/post/new" method="post">
+    <form:form action="${pageContext.request.contextPath}/post/new" method="get">
         <input type="submit" value="Nowy post" class="btn btn-primary btn-sm">
     </form:form>
 </div>

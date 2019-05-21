@@ -32,12 +32,17 @@ public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").authenticated()
+                .antMatchers("/post/new").authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/showLogin")
                     .loginProcessingUrl("/authenticateUser")
                     .successHandler(customAuthenticationSuccessHandler)
                     .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/showLogin?logout")
+                .permitAll()
                 .and()
                     .exceptionHandling()
                     .accessDeniedPage("/access-denied");

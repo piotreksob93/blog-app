@@ -12,58 +12,65 @@
 <head>
     <title>Strona rejestracji</title>
     <style>
-        .error {color:red}
+        .error {
+            color: red
+        }
     </style>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<div align="center" style="margin-left: 25%; margin-right: 25%;">
-<form:form action="${pageContext.request.contextPath}/register/processRegistrationForm" modelAttribute="blogUser">
-    <div class="error">
-        <c:if test="${registrationError !=null}">
-            ${registrationError}
-        </c:if>
-    </div>
-    <div class="form-group">
-        <label>Username:</label>
-        <form:errors path="userName" cssClass="error" />
-        <form:input path="userName" placeholder="username (*)" class="form-control form-control-sm"/>
-    </div>
-    <div class="form-group">
-        <label>Password:</label>
-        <form:errors path="password" cssClass="error" />
-        <form:password path="password" placeholder="password (*)" class="form-control form-control-sm"/>
-    </div>
-    <div class="form-group">
-        <label>Password:</label>
-        <form:errors path="matchingPassword" cssClass="error" />
-        <form:password path="matchingPassword" placeholder="password (*)" class="form-control form-control-sm"/>
-    </div>
-    <div class="form-group">
-        <label>First name:</label>
-        <form:errors path="firstName" cssClass="error" />
-        <form:input path="firstName" placeholder="first name (*)" class="form-control form-control-sm"/>
-    </div>
-    <div class="form-group">
-        <label>Last name:</label>
-        <form:errors path="lastName" cssClass="error" />
-        <form:input path="lastName" placeholder="last name (*)" class="form-control form-control-sm"/>
-    </div>
-    <div class="form-group">
-        <label>Email:</label>
-        <form:errors path="email" cssClass="error" />
-        <form:input path="email" placeholder="email (*)" class="form-control form-control-sm"/>
-    </div>
+<div style="display: flex; justify-content: center; margin-top: 15px;">
+    <div style="width: 20%">
+        <h2>REJESTRACJA:</h2>
+        <form:form action="${pageContext.request.contextPath}/register/processRegistrationForm"
+                   modelAttribute="blogUser">
+        <div class="error">
+            <c:if test="${registrationError !=null}">
+                ${registrationError}
+            </c:if>
+        </div>
+        <div class="form-group">
+            <label>Username:</label>
+            <form:errors path="userName" cssClass="error"/>
+            <form:input path="userName" placeholder="username (*)" class="form-control form-control-sm"/>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <form:errors path="password" cssClass="error"/>
+            <form:password path="password" placeholder="password (*)" class="form-control form-control-sm"/>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <form:errors path="matchingPassword" cssClass="error"/>
+            <form:password path="matchingPassword" placeholder="password (*)" class="form-control form-control-sm"/>
+        </div>
+        <div class="form-group">
+            <label>First name:</label>
+            <form:errors path="firstName" cssClass="error"/>
+            <form:input path="firstName" placeholder="first name (*)" class="form-control form-control-sm"/>
+        </div>
+        <div class="form-group">
+            <label>Last name:</label>
+            <form:errors path="lastName" cssClass="error"/>
+            <form:input path="lastName" placeholder="last name (*)" class="form-control form-control-sm"/>
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <form:errors path="email" cssClass="error"/>
+            <form:input path="email" placeholder="email (*)" class="form-control form-control-sm"/>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Zarejestruj</button>
-</form:form>
-    <form:form action="${pageContext.request.contextPath}/">
-        <button type="submit" class="btn btn-primary">Strona główna</button>
-    </form:form>
+        <div style="display: flex; align-items: center; padding: 5px; justify-content: center;">
+            <button type="submit" class="btn btn-primary" style="margin-right: 1rem">Zarejestruj</button>
+            </form:form>
+            <form:form action="${pageContext.request.contextPath}/" style="margin: 0">
+                <button type="submit" class="btn btn-primary">Strona główna</button>
+            </form:form>
+        </div>
 
+    </div>
 </div>
-
 </body>
 </html>
