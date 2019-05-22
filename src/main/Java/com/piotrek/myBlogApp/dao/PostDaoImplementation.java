@@ -20,10 +20,36 @@ public class PostDaoImplementation implements PostDao {
 
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Post> theQuery = session.createQuery("from Post order by editDate",Post.class);
+        Query<Post> theQuery = session.createQuery("from Post order by id desc",Post.class);
 
         List<Post> posts =theQuery.getResultList();
 
         return posts;
     }
+
+    @Override
+    public void savePost(Post thePost) {
+        Session session = sessionFactory.getCurrentSession();
+
+        session.saveOrUpdate(thePost);
+    }
+
+    @Override
+    public void delete(int theId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Post tempPost = getPost(theId);
+
+        session.delete(tempPost);
+    }
+
+    @Override
+    public Post getPost(int theId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Post tempPost = session.get(Post.class,theId);
+        return tempPost;
+    }
+
+
 }

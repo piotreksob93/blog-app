@@ -1,5 +1,8 @@
 package com.piotrek.myBlogApp.entity;
 
+import com.piotrek.myBlogApp.helperClasses.DateUtils;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,10 +19,12 @@ public class Post {
     private String postTitle;
 
     @Column(name = "post_content")
+    @Type(type="text")
     private String postContent;
 
-    @Column(name = "edit_date")
-    private String editDate;
+    @Column(name = "created_date",columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date editDate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
@@ -53,11 +58,11 @@ public class Post {
         this.postContent = postContent;
     }
 
-    public String getEditDate() {
+    public Date getEditDate() {
         return editDate;
     }
 
-    public void setEditDate(String editDate) {
+    public void setEditDate(Date editDate) {
         this.editDate = editDate;
     }
 
@@ -75,7 +80,7 @@ public class Post {
                 "id=" + id +
                 ", postTitle='" + postTitle + '\'' +
                 ", postContent='" + postContent + '\'' +
-                ", editDate=" + editDate +
+                ", editDate=" + DateUtils.formatDate(editDate) +
                 ", user=" + user +
                 '}';
     }

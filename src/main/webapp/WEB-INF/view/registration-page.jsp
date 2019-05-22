@@ -65,9 +65,7 @@
         <div style="display: flex; align-items: center; padding: 5px; justify-content: center;">
             <button type="submit" class="btn btn-primary" style="margin-right: 1rem">Zarejestruj</button>
             </form:form>
-            <form:form action="${pageContext.request.contextPath}/" style="margin: 0">
-                <button type="submit" class="btn btn-primary">Strona główna</button>
-            </form:form>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Strona główna</a>
         </div>
 
     </div>

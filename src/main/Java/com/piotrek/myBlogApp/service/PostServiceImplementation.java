@@ -20,4 +20,22 @@ public class PostServiceImplementation implements PostService {
     public List<Post> getPosts() {
         return postDao.getPosts();
     }
+
+    @Override
+    @Transactional
+    public void save(Post thePost) {
+        postDao.savePost(thePost);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int theId) {
+        postDao.delete(theId);
+    }
+
+    @Override
+    @Transactional
+    public Post getPost(int theId) {
+        return postDao.getPost(theId);
+    }
 }
