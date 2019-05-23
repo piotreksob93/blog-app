@@ -12,6 +12,11 @@
     <title>Dodaj nowy post</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .error {
+            color: red
+        }
+    </style>
 </head>
 <body>
 
@@ -19,15 +24,16 @@
     <div style="width: 35%;">
         <h2>Utwórz nowy post!</h2>
         <hr>
-        <form:form action="/post/save" method="post" modelAttribute="post">
+        <form:form action="${pageContext.request.contextPath}/post/save" method="post" modelAttribute="post">
             <form:hidden path="id"/>
             <div>
                 <label>Tytuł</label>
+                <form:errors path="postTitle" cssClass="error"/>
                 <form:input path="postTitle" class="form-control form-control-sm"/>
             </div>
             <div>
                 <label>Treść posta</label>
-
+                <form:errors path="postContent" cssClass="error"/>
                 <form:textarea rows="5" path="postContent" class="form-control form-control-sm" style="border: solid thin; resize: none"/>
             </div>
             <input type="submit" value="Zapisz post" class="btn btn-primary" style="margin-top: 10px;">
