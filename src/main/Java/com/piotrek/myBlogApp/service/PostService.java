@@ -15,4 +15,8 @@ public interface PostService {
     void delete(int theId);
 
     Post getPost(int theId);
+
+    List<Post> getPosts(int pageId, int postByPage);
+
+    long countPosts();
 }

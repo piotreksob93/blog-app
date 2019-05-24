@@ -58,4 +58,16 @@ public class PostServiceImplementation implements PostService {
     public Post getPost(int theId) {
         return postDao.getPost(theId);
     }
+
+    @Override
+    @Transactional
+    public List<Post> getPosts(int pageId, int postByPage) {
+        return postDao.getPosts(pageId,postByPage);
+    }
+
+    @Override
+    @Transactional
+    public long countPosts() {
+        return postDao.countPosts();
+    }
 }

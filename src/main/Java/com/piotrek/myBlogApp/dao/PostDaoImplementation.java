@@ -51,5 +51,27 @@ public class PostDaoImplementation implements PostDao {
         return tempPost;
     }
 
+    @Override
+    public List<Post> getPosts(int pageId, int postByPage) {
 
+        Session session = sessionFactory.getCurrentSession();
+        Query<Post> query = session.createQuery("from Post order by id desc",Post.class);
+        query.setFirstResult(pageId-1);
+        query.setMaxResults(postByPage);
+
+        List<Post> posts = query.getResultList();
+
+        return posts;
+    }
+
+    @Override
+    public long countPosts() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("select count(id) from Post");
+
+        long result = query.getFirstResult();
+
+        return result;
+    }
 }

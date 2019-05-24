@@ -1,9 +1,7 @@
 package com.piotrek.myBlogApp.controller;
 
 import com.piotrek.myBlogApp.entity.Post;
-import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.PostService;
-import com.piotrek.myBlogApp.service.UserService;
 import com.piotrek.myBlogApp.user.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,8 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/post")
@@ -42,14 +38,14 @@ public class PostController {
 
         postService.save(thePost,authentication);
 
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     @GetMapping("/delete")
     public String deletePost(@RequestParam("postId") int theId){
 
         postService.delete(theId);
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     @GetMapping("/edit")
