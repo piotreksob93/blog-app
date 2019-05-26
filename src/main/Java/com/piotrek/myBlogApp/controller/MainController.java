@@ -16,6 +16,11 @@ public class MainController {
     @Autowired
     private PostService postService;
 
+    @GetMapping("/")
+    public String showHome(){
+        return "redirect:/1";
+    }
+
     @GetMapping("/{pageId}")
     public String showHomePage(@PathVariable int pageId,Model theModel){
 
