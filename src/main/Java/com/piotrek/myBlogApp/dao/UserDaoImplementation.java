@@ -17,7 +17,6 @@ public class UserDaoImplementation implements UserDao {
     public User findByUserName(String userName) {
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // now retrieve/read from database using username
         Query<User> theQuery = currentSession.createQuery("from User where userName=:uName", User.class);
         theQuery.setParameter("uName", userName);
         User theUser = null;
@@ -26,7 +25,6 @@ public class UserDaoImplementation implements UserDao {
         } catch (Exception e) {
             theUser = null;
         }
-
         return theUser;
     }
 
