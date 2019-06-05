@@ -37,7 +37,7 @@
                 <label>Username:</label><input type="text" name="username" class="form-control form-control-sm"/>
             </p>
             <p>
-                <label>Passowrd:</label><input type="password" name="password" class="form-control form-control-sm"/>
+                <label>Password:</label><input type="password" name="password" class="form-control form-control-sm"/>
             </p>
             <input type="submit" value="Zaloguj" class="btn btn-info"/>
             <a href="${pageContext.request.contextPath}/register/showRegistrationPage" class="btn btn-info">Zarejestruj się</a>
