@@ -13,7 +13,7 @@
 
 	<hr>
 
-	<a href="${pageContext.request.contextPath}/" class="btn btn-info">Login with new user</a>
+	<a href="${pageContext.request.contextPath}/" class="btn btn-info">Zaloguj się</a>
 </div>
 
 	

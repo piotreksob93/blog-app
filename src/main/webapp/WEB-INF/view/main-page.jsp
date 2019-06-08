@@ -21,7 +21,11 @@
 <h2 align="center">WITAJ NA STRONIE GŁÓWNEJ!</h2>
 
 <div align="center">
-    Jesteś zalogowany jako: <a hfer=""><security:authentication property="principal.username"/></a><br>
+    <security:authentication property="principal.username" var="username"/>
+    <c:url var="userProfLink" value="/user/profile">
+        <c:param name="username" value="${username}"/>
+    </c:url>
+    Jesteś zalogowany jako: <a href="${userProfLink}">${username}</a><br>
     Twoje role to: <security:authentication property="principal.authorities"/><br>
     <form:form action="${pageContext.request.contextPath}/logout" method="post">
         <input type="submit" value="Logout" class="btn btn-default btn-sm">
@@ -33,39 +37,9 @@
 
 <hr width="60%">
 <h1 align="center">POSTY:</h1>
-<div  align="center">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <c:if test="${currentPage==1}">
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+2}">${currentPage+2}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">Next</a></li>
-            </c:if>
-            <c:if test="${currentPage==pages}">
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-2}">${currentPage-2}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-            </c:if>
-            <c:if test="${currentPage>1 and currentPage<pages}">
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item "><a class="page-link" href="/${currentPage+1}">Next</a></li>
-            </c:if>
-        </ul>
-    </nav>
-</div>
+
+
+
 
 <c:forEach var="tempPost" items="${posts}">
     <c:url var="deleteLink" value="/post/delete">
@@ -74,6 +48,11 @@
     <c:url var="editLink" value="/post/edit">
         <c:param name="postId" value="${tempPost.id}"/>
     </c:url>
+    <c:url var="userProfLink" value="/user/profile">
+        <c:param name="username" value="${tempPost.user.userName}"/>
+    </c:url>
+
+
     <div align="center">
         <form:form>
             <h4><strong>${tempPost.postTitle}</strong></h4>
@@ -95,7 +74,7 @@
             </security:authorize>
             <p>
                 <label>Dodano dnia :</label>${tempPost.editDate}
-                <label style="padding-left: 80px">Autor:</label> <a hfer="">${tempPost.user.userName}</a>
+                <label style="padding-left: 80px">Autor:</label> <a href="${userProfLink}">${tempPost.user.userName}</a>
             </p>
         </form:form>
         <hr style="width: 45%;">
@@ -103,40 +82,48 @@
 </c:forEach>
 
 
+<!-- pagination here -->
+<c:if test="${pages>1}">
+    <div  align="center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
 
-<div  align="center">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <c:if test="${currentPage==1}">
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+2}">${currentPage+2}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">Next</a></li>
-            </c:if>
-            <c:if test="${currentPage==pages}">
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-2}">${currentPage-2}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-            </c:if>
-            <c:if test="${currentPage>1 and currentPage<pages}">
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                <li class="page-item "><a class="page-link" href="/${currentPage+1}">Next</a></li>
-            </c:if>
-        </ul>
-    </nav>
-</div>
+                <c:if test="${currentPage==1}">
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
+                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
+                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
+                    <c:if test="${pages>2}">
+                        <li class="page-item"><a class="page-link" href="/${currentPage+2}">${currentPage+2}</a></li>
+                    </c:if>
+                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
+                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">Next</a></li>
+                </c:if>
+                <c:if test="${currentPage==pages}">
+                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
+                    <c:if test="${pages>2}">
+                        <li class="page-item"><a class="page-link" href="/${currentPage-2}">${currentPage-2}</a></li>
+                    </c:if>
+                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
+                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
+                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                </c:if>
+                <c:if test="${currentPage>1 and currentPage<pages}">
+                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
+                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
+                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
+                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
+                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
+                    <li class="page-item "><a class="page-link" href="/${currentPage+1}">Next</a></li>
+                </c:if>
+                <div>Strona ${currentPage} z ${pages}</div>
+            </ul>
+        </nav>
+    </div>
+</c:if>
 
 </body>
 </html>

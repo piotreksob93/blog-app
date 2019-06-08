@@ -16,10 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImplemntation implements UserService {
+public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserDao userDao;
@@ -40,15 +41,25 @@ public class UserServiceImplemntation implements UserService {
     @Override
     @Transactional
     public void save(BlogUser theBlogUser) {
+
         User user = new User();
 
+        user.setId(theBlogUser.getId());
         user.setUserName(theBlogUser.getUserName());
-        user.setPassword(passwordEncoder.encode(theBlogUser.getPassword()));
+        if (theBlogUser.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(theBlogUser.getPassword()));
+        }
         user.setFirstName(theBlogUser.getFirstName());
         user.setLastName(theBlogUser.getLastName());
         user.setEmail(theBlogUser.getEmail());
 
-        user.setRole(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
+        if (theBlogUser.getRole() == null) {
+            user.setRole(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
+        }
+
+        if (theBlogUser.getPosts() != null) {
+            user.setPosts(theBlogUser.getPosts());
+        }
 
         userDao.save(user);
     }
@@ -64,7 +75,7 @@ public class UserServiceImplemntation implements UserService {
                 mapRolesToAuthorities(user.getRole()));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+    private List<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
     }
 }

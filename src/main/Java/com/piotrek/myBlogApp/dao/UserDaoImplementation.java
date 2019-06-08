@@ -25,6 +25,8 @@ public class UserDaoImplementation implements UserDao {
         } catch (Exception e) {
             theUser = null;
         }
+
+
         return theUser;
     }
 

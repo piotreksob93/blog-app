@@ -1,6 +1,5 @@
 package com.piotrek.myBlogApp.entity;
 
-import com.piotrek.myBlogApp.helperClasses.DateUtils;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -74,14 +73,5 @@ public class Post {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", postTitle='" + postTitle + '\'' +
-                ", postContent='" + postContent + '\'' +
-                ", editDate=" + DateUtils.formatDate(editDate) +
-                ", user=" + user +
-                '}';
-    }
+
 }

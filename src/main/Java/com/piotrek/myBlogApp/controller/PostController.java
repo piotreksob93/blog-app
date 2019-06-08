@@ -1,6 +1,7 @@
 package com.piotrek.myBlogApp.controller;
 
 import com.piotrek.myBlogApp.entity.Post;
+import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.PostService;
 import com.piotrek.myBlogApp.user.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,6 @@ public class PostController {
         Post thePost = postService.getPost(theId);
 
         theModel.addAttribute("post",thePost);
-
         return "post-create-page";
     }
 }

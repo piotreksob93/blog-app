@@ -31,8 +31,9 @@ public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").authenticated()
-                .antMatchers("/post/new").hasRole(("USER"))
+                .antMatchers("/*").authenticated()
+                .antMatchers("/post/*").hasRole("USER")
+                .antMatchers("/user/*").hasRole("USER")
                 .and()
                 .formLogin()
                     .loginPage("/showLogin")

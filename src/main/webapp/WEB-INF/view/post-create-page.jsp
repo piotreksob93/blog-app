@@ -36,8 +36,12 @@
                 <form:errors path="postContent" cssClass="error"/>
                 <form:textarea rows="5" path="postContent" class="form-control form-control-sm" style="border: solid thin; resize: none"/>
             </div>
-            <input type="submit" value="Zapisz post" class="btn btn-primary" style="margin-top: 10px;">
-        </form:form>
+            <div style="display: flex; align-items: center; padding: 5px; justify-content: center;">
+                <input type="submit" value="Zapisz post" class="btn btn-primary" style="margin-right: 1rem">
+                </form:form>
+                <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Strona główna</a>
+            </div>
+
     </div>
 </div>
 

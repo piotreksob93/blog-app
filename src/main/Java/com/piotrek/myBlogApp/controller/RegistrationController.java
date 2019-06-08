@@ -41,15 +41,14 @@ public class RegistrationController {
             BindingResult theBindingResult,
             Model theModel) {
 
-        String userName = theBlogUser.getUserName();
-        System.out.println("Processing registration form for: " + userName);
 
-        // form validation
+
         if (theBindingResult.hasErrors()){
             return "registration-page";
         }
 
-        // check the database if user already exists
+        String userName = theBlogUser.getUserName();
+
         User existing = userService.findByUserName(userName);
         if (existing != null){
             theModel.addAttribute("blogUser", new BlogUser());

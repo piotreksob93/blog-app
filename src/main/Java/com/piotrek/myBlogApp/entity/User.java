@@ -1,5 +1,8 @@
 package com.piotrek.myBlogApp.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -28,13 +31,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> role;
+    private List<Role> role;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 
     public User() {
@@ -88,11 +92,11 @@ public class User {
         this.email = email;
     }
 
-    public Collection<Role> getRole() {
+    public List<Role> getRole() {
         return role;
     }
 
-    public void setRole(Collection<Role> role) {
+    public void setRole(List<Role> role) {
         this.role = role;
     }
 
@@ -104,17 +108,5 @@ public class User {
         this.posts = posts;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", posts=" + posts +
-                '}';
-    }
+
 }

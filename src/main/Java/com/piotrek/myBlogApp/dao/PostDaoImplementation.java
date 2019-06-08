@@ -31,6 +31,8 @@ public class PostDaoImplementation implements PostDao {
     public void savePost(Post thePost) {
         Session session = sessionFactory.getCurrentSession();
 
+        session.clear();
+
         session.saveOrUpdate(thePost);
     }
 
@@ -39,6 +41,8 @@ public class PostDaoImplementation implements PostDao {
         Session session = sessionFactory.getCurrentSession();
 
         Post tempPost = getPost(theId);
+
+        tempPost.getUser().getPosts().remove(tempPost);
 
         session.delete(tempPost);
     }
@@ -68,7 +72,7 @@ public class PostDaoImplementation implements PostDao {
     public long countPosts() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("select count(id) from Post");
+        Query query = session.createQuery("select count(p.id) from Post p");
 
         long result = query.getFirstResult();
 

@@ -1,9 +1,8 @@
 package com.piotrek.myBlogApp.entity;
 
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "role")
@@ -17,11 +16,11 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Collection<User> user;
+    private List<User> user;
 
     public Role() {
 
@@ -43,20 +42,13 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Collection<User> getUser() {
+    public List<User> getUser() {
         return user;
     }
 
-    public void setUser(Collection<User> user) {
+    public void setUser(List<User> user) {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", roleName='" + roleName + '\'' +
-                ", user=" + user +
-                '}';
-    }
+
 }
