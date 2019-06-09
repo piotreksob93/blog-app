@@ -27,25 +27,29 @@
         <form:hidden path="id"/>
         <form:hidden path="userName"/>
         <form:hidden path="password"/>
+        <form:hidden path="matchingPassword"/>
         <form:hidden path="firstName"/>
         <form:hidden path="lastName"/>
         <form:hidden path="email"/>
 
 
-        <c:forEach items="${user.role}" varStatus="st">
+        <c:forEach items="${user.role}" var="tempRole" varStatus="st">
             <form:hidden path="role[${st.index}].id"/>
             <form:hidden path="role[${st.index}].roleName"/>
-            <form:hidden path="role[${st.index}].user[0].id"/>
+            <c:forEach items="${tempRole.user}" varStatus="st2">
+                <form:hidden path="role[${st.index}].user[${st2.index}].id"/>
+            </c:forEach>
+
         </c:forEach>
 
 
-        <c:forEach items="${user.posts}" varStatus="st">
-            <form:hidden path="posts[${st.index}].id"/>
-            <form:hidden path="posts[${st.index}].user.id"/>
-            <form:hidden path="posts[${st.index}].editDate"/>
-            <form:hidden path="posts[${st.index}].postTitle"/>
-            <form:hidden path="posts[${st.index}].postContent"/>
-        </c:forEach>
+<%--        <c:forEach items="${user.posts}" varStatus="st">--%>
+<%--            <form:hidden path="posts[${st.index}].id"/>--%>
+<%--            <form:hidden path="posts[${st.index}].user.id"/>--%>
+<%--            <form:hidden path="posts[${st.index}].editDate"/>--%>
+<%--            <form:hidden path="posts[${st.index}].postTitle"/>--%>
+<%--            <form:hidden path="posts[${st.index}].postContent"/>--%>
+<%--        </c:forEach>--%>
 
         <div class="form-group">
             <label>Username:</label>

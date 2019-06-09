@@ -28,8 +28,7 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private RoleDao roleDao;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+
 
     @Override
     @Transactional
@@ -47,7 +46,7 @@ public class UserServiceImplementation implements UserService {
         user.setId(theBlogUser.getId());
         user.setUserName(theBlogUser.getUserName());
         if (theBlogUser.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(theBlogUser.getPassword()));
+            user.setPassword(theBlogUser.getPassword());
         }
         user.setFirstName(theBlogUser.getFirstName());
         user.setLastName(theBlogUser.getLastName());
@@ -55,6 +54,9 @@ public class UserServiceImplementation implements UserService {
 
         if (theBlogUser.getRole() == null) {
             user.setRole(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
+        }
+        else{
+            user.setRole(theBlogUser.getRole());
         }
 
         if (theBlogUser.getPosts() != null) {

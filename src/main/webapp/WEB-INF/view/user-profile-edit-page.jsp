@@ -28,17 +28,22 @@
             <form:hidden path="id"/>
             <form:hidden path="userName"/>
             <form:hidden path="password"/>
-            <c:forEach items="${user.role.toArray()}" varStatus="st">
+            <form:hidden path="matchingPassword"/>
+            <c:forEach items="${user.role}" var="tempRole" varStatus="st">
                 <form:hidden path="role[${st.index}].id"/>
                 <form:hidden path="role[${st.index}].roleName"/>
+                <c:forEach items="${tempRole.user}" varStatus="st2">
+                    <form:hidden path="role[${st.index}].user[${st2.index}].id"/>
+                </c:forEach>
+
             </c:forEach>
-            <c:forEach items="${user.posts}" varStatus="st">
-                <form:hidden path="posts[${st.index}].id"/>
-                <form:hidden path="posts[${st.index}].user.id"/>
-                <form:hidden path="posts[${st.index}].editDate"/>
-                <form:hidden path="posts[${st.index}].postTitle"/>
-                <form:hidden path="posts[${st.index}].postContent"/>
-            </c:forEach>
+<%--            <c:forEach items="${user.posts}" varStatus="st">--%>
+<%--                <form:hidden path="posts[${st.index}].id"/>--%>
+<%--                <form:hidden path="posts[${st.index}].user.id"/>--%>
+<%--                <form:hidden path="posts[${st.index}].editDate"/>--%>
+<%--                <form:hidden path="posts[${st.index}].postTitle"/>--%>
+<%--                <form:hidden path="posts[${st.index}].postContent"/>--%>
+<%--            </c:forEach>--%>
 
             <div class="form-group">
                 <label>First name:</label>
@@ -54,14 +59,6 @@
                 <label>Email:</label>
                 <form:errors path="email" cssClass="error"/>
                 <form:input path="email" placeholder="Email (*)" class="form-control form-control-sm"/>
-            </div>
-            <div class="form-group">
-                <label>Role:</label>
-                <ul class="list-group">
-                    <c:forEach items="${user.role}" var="tempRole" varStatus="status">
-                        <li class="list-group-item">${tempRole.roleName}</li>
-                    </c:forEach>
-                </ul>
             </div>
             <button type="submit" class="btn btn-primary" style="margin-right: 1rem">Zapisz</button>
             <a href="${pageContext.request.contextPath}/1" class="btn btn-primary">Strona główna</a>

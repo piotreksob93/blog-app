@@ -25,8 +25,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
     @InitBinder
     public final void initBinderUsuariosFormValidator(final WebDataBinder binder, final Locale locale) {
@@ -43,11 +41,14 @@ public class UserController {
         blogUser.setId(user.getId());
         blogUser.setUserName(user.getUserName());
         blogUser.setPassword(user.getPassword());
+        blogUser.setMatchingPassword(blogUser.getPassword());
         blogUser.setFirstName(user.getFirstName());
         blogUser.setLastName(user.getLastName());
         blogUser.setEmail(user.getEmail());
         blogUser.setRole(user.getRole());
         blogUser.setPosts(user.getPosts());
+
+
         theModel.addAttribute("user", blogUser);
         return "user-profile-page";
     }
@@ -63,11 +64,11 @@ public class UserController {
     public String updateUser(@Valid @ModelAttribute("user") BlogUser theBlogUser,
                              BindingResult bindingResult){
 
-//        if (bindingResult.hasErrors()){
-//
-//            //tutaj trzeba poprawić żeby nie łapało błędu z pól z hasłem
-//            return "user-profile-edit-page";
-//        }
+        if (bindingResult.hasErrors()){
+
+            //tutaj trzeba poprawić żeby nie łapało błędu z pól z hasłem
+            return "user-profile-edit-page";
+        }
 
         userService.save(theBlogUser);
 

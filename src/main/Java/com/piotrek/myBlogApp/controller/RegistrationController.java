@@ -5,6 +5,7 @@ import com.piotrek.myBlogApp.service.UserService;
 import com.piotrek.myBlogApp.user.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,9 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -58,6 +62,8 @@ public class RegistrationController {
             return "registration-page";
         }
 
+
+        theBlogUser.setPassword(passwordEncoder.encode(theBlogUser.getPassword()));
         userService.save(theBlogUser);
 
         System.out.println("Successfully created user: " + userName);
