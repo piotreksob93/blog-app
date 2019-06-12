@@ -38,4 +38,15 @@ public class UserDaoImplementation implements UserDao {
     session.flush();
 
     }
+
+    @Override
+    public void updatePassword(String password,String username) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("update User set password = :pass  where userName= :name",User.class);
+        query.setParameter("pass",password);
+        query.setParameter("name",username);
+        query.executeUpdate();
+        System.out.println("\n\n\n\n tutaj jest po update hasła \n\n\n\n");
+    }
 }

@@ -60,6 +60,15 @@
                 <form:errors path="email" cssClass="error"/>
                 <form:input path="email" placeholder="Email (*)" class="form-control form-control-sm"/>
             </div>
+            <div style="padding-bottom: 1rem;">
+
+                <c:url var="passwordChangeLink" value="/user/password">
+                    <c:param name="userPass" value="${user.password}"/>
+                    <c:param name="userName" value="${user.userName}"/>
+                </c:url>
+                <a href="${passwordChangeLink}">Zmień hasło</a>
+            </div>
+
             <button type="submit" class="btn btn-primary" style="margin-right: 1rem">Zapisz</button>
             <a href="${pageContext.request.contextPath}/1" class="btn btn-primary">Strona główna</a>
         </form:form>

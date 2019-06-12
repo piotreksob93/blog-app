@@ -7,7 +7,6 @@ import com.piotrek.myBlogApp.validation.FieldMatch;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.List;
 
 @FieldMatch.List({

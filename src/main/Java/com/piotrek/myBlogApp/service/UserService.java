@@ -9,4 +9,6 @@ public interface UserService extends UserDetailsService {
     User findByUserName(String userName);
 
     void save(BlogUser theBlogUser);
+
+    void updatePassword(String password, String username);
 }

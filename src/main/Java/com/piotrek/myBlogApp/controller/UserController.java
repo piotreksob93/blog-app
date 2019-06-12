@@ -3,6 +3,7 @@ package com.piotrek.myBlogApp.controller;
 import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.UserService;
 import com.piotrek.myBlogApp.user.BlogUser;
+import com.piotrek.myBlogApp.user.PasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @InitBinder
@@ -65,8 +69,6 @@ public class UserController {
                              BindingResult bindingResult){
 
         if (bindingResult.hasErrors()){
-
-            //tutaj trzeba poprawić żeby nie łapało błędu z pól z hasłem
             return "user-profile-edit-page";
         }
 
@@ -76,5 +78,49 @@ public class UserController {
         String redirectLink = "redirect:/user/profile?username=" + theBlogUser.getUserName();
 
         return redirectLink;
+    }
+
+    @GetMapping("/password")
+    public String showPasswordChangeAPge(@RequestParam ("userPass") String password, @RequestParam ("userName") String username,Model theModel){
+
+        PasswordDto passwordDto = new PasswordDto();
+
+        passwordDto.setUsername(username);
+
+        passwordDto.setPassword(password);
+
+        theModel.addAttribute("pass",passwordDto);
+
+        return "password-change-page";
+    }
+
+    @PostMapping("/processPasswordChange")
+    public String processPasswordChange(@Valid @ModelAttribute("pass") PasswordDto passwordDto,BindingResult bindingResult,Model theModel){
+
+        if(bindingResult.hasErrors()){
+            return "password-change-page";
+        }
+
+        if(passwordDto.getOldPassword().equals(passwordDto.getNewPassword())){
+            theModel.addAttribute("passwordChangeError1","Zmień hasło");
+            return "password-change-page";
+        }
+
+        String hashedPass = passwordDto.getPassword();
+
+        String rawPass = passwordDto.getOldPassword();
+
+
+        if(passwordEncoder.matches(rawPass,hashedPass)){
+
+            userService.updatePassword(passwordEncoder.encode(passwordDto.getNewPassword()),passwordDto.getUsername());
+
+            return "redirect:/";
+        }
+        else{
+            theModel.addAttribute("passwordChangeError2","Podałeś złe hasło");
+            return "password-change-page";
+        }
+
     }
 }
