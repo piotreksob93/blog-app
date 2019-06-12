@@ -1,9 +1,12 @@
 package com.piotrek.myBlogApp.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -24,6 +27,10 @@ public class Post {
     @Column(name = "created_date",columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editDate;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostComments> postComments;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
@@ -73,5 +80,11 @@ public class Post {
         this.user = user;
     }
 
+    public List<PostComments> getPostComments() {
+        return postComments;
+    }
 
+    public void setPostComments(List<PostComments> postComments) {
+        this.postComments = postComments;
+    }
 }

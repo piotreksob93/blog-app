@@ -34,12 +34,10 @@ public class MainController {
             pageId=(pageId-1)*postByPage+1;
         }
 
-        //long countPosts = postService.countPosts();
-        //System.out.println(countPosts);
+        long countPosts = postService.countPosts();
 
-        List<Post> posts = postService.getPosts();
-        float pages = (float)posts.size()/(float)postByPage;
-        posts = postService.getPosts(pageId,postByPage);
+        float pages = (float)countPosts/(float)postByPage;
+        List<Post> posts = postService.getPosts(pageId,postByPage);
 
         theModel.addAttribute("posts",posts);
 

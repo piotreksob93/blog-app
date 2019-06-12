@@ -72,9 +72,7 @@ public class PostDaoImplementation implements PostDao {
     public long countPosts() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("select count(p.id) from Post p");
-
-        long result = query.getFirstResult();
+        Long result = (Long) session.createQuery("select count(p.id) from Post p").getSingleResult();
 
         return result;
     }

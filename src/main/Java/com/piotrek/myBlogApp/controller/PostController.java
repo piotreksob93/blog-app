@@ -50,14 +50,14 @@ public class PostController {
 
         postService.save(thePost,authentication);
 
-        return "redirect:/1";
+        return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String deletePost(@RequestParam("postId") int theId){
 
         postService.delete(theId);
-        return "redirect:/1";
+        return "redirect:/";
     }
 
     @GetMapping("/edit")
