@@ -7,6 +7,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImplementation implements UserDao {
 
@@ -43,10 +45,18 @@ public class UserDaoImplementation implements UserDao {
     public void updatePassword(String password,String username) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("update User set password = :pass  where userName= :name",User.class);
+        Query query = session.createQuery("update User set password = :pass  where userName= :name");
         query.setParameter("pass",password);
         query.setParameter("name",username);
         query.executeUpdate();
-        System.out.println("\n\n\n\n tutaj jest po update hasła \n\n\n\n");
+    }
+
+    @Override
+    public List<User> getUsers() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query =session.createQuery("from User ",User.class);
+        List<User> users = query.getResultList();
+        return users;
     }
 }

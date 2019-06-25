@@ -26,6 +26,11 @@ public class Role {
 
     }
 
+    public Role(String roleName, List<User> user) {
+        this.roleName = roleName;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }

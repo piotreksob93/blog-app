@@ -13,10 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 
 @Controller
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showUserPanel(@RequestParam("username") String userName, Model theModel){
+    public String showUserPanel(@RequestParam("username") String userName, Model theModel) {
 
         User user = userService.findByUserName(userName);
         BlogUser blogUser = new BlogUser();
@@ -59,16 +59,16 @@ public class UserController {
 
 
     @PostMapping("/edit")
-    public String showUserEditPage(@ModelAttribute("user") BlogUser theBlogUser){
+    public String showUserEditPage(@ModelAttribute("user") BlogUser theBlogUser) {
 
         return "user-profile-edit-page";
     }
 
     @PostMapping("/processUserUpdate")
     public String updateUser(@Valid @ModelAttribute("user") BlogUser theBlogUser,
-                             BindingResult bindingResult){
+                             BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "user-profile-edit-page";
         }
 
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/password")
-    public String showPasswordChangeAPge(@RequestParam ("userPass") String password, @RequestParam ("userName") String username,Model theModel){
+    public String showPasswordChangeAPge(@RequestParam("userPass") String password, @RequestParam("userName") String username, Model theModel) {
 
         PasswordDto passwordDto = new PasswordDto();
 
@@ -89,20 +89,20 @@ public class UserController {
 
         passwordDto.setPassword(password);
 
-        theModel.addAttribute("pass",passwordDto);
+        theModel.addAttribute("pass", passwordDto);
 
         return "password-change-page";
     }
 
     @PostMapping("/processPasswordChange")
-    public String processPasswordChange(@Valid @ModelAttribute("pass") PasswordDto passwordDto,BindingResult bindingResult,Model theModel){
+    public String processPasswordChange(@Valid @ModelAttribute("pass") PasswordDto passwordDto, BindingResult bindingResult, Model theModel) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "password-change-page";
         }
 
-        if(passwordDto.getOldPassword().equals(passwordDto.getNewPassword())){
-            theModel.addAttribute("passwordChangeError1","Zmień hasło");
+        if (passwordDto.getOldPassword().equals(passwordDto.getNewPassword())) {
+            theModel.addAttribute("passwordChangeError1", "Zmień hasło");
             return "password-change-page";
         }
 
@@ -111,14 +111,13 @@ public class UserController {
         String rawPass = passwordDto.getOldPassword();
 
 
-        if(passwordEncoder.matches(rawPass,hashedPass)){
+        if (passwordEncoder.matches(rawPass, hashedPass)) {
 
-            userService.updatePassword(passwordEncoder.encode(passwordDto.getNewPassword()),passwordDto.getUsername());
+            userService.updatePassword(passwordEncoder.encode(passwordDto.getNewPassword()), passwordDto.getUsername());
 
             return "redirect:/";
-        }
-        else{
-            theModel.addAttribute("passwordChangeError2","Podałeś złe hasło");
+        } else {
+            theModel.addAttribute("passwordChangeError2", "Podałeś złe hasło");
             return "password-change-page";
         }
 
