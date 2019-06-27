@@ -70,4 +70,10 @@ public class PostServiceImplementation implements PostService {
     public long countPosts() {
         return postDao.countPosts();
     }
+
+    @Override
+    @Transactional
+    public List<Post> searchPosts(String postTitle) {
+        return postDao.searchPosts(postTitle);
+    }
 }

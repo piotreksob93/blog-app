@@ -50,7 +50,9 @@
             <%--            <form:hidden path="posts[${st.index}].postTitle"/>--%>
             <%--            <form:hidden path="posts[${st.index}].postContent"/>--%>
             <%--        </c:forEach>--%>
-
+        <div class="form-group" align="center">
+            <img src="${pageContext.request.contextPath}/resources/images/default-profile-image2.jpg" style="max-width: 300px;">
+        </div>
         <div class="form-group">
             <label>Username:</label>
             <ul class="list-group">

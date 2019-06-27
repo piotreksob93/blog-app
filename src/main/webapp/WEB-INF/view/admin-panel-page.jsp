@@ -11,14 +11,26 @@
     <title>Panel Administratora</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        a{
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <div style="display: flex; justify-content: center; margin-top: 15px;">
     <div style="width: 20%">
-        <h2>PANEL ADMINISTRATORA!</h2>
+        <div align="center">
+            <h2>PANEL ADMINISTRATORA!</h2>
+            <div>
+                <a href="${pageContext.request.contextPath}/1" class="btn btn-primary">Strona główna</a>
+            </div>
+            <div>
+                <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-primary">Lista użytkowników</a>
+            </div>
 
-        <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-primary">Lista użytkowników</a>
-        <a href="${pageContext.request.contextPath}/1" class="btn btn-primary">Strona główna</a>
+        </div>
+
     </div>
 </div>
 </body>

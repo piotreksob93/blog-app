@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -66,5 +67,20 @@ public class PostController {
 
         theModel.addAttribute("post",thePost);
         return "post-create-page";
+    }
+
+    @GetMapping("/search")
+    public String showPostSearchResultPage(@RequestParam ("postTitle") String postTitle,Model theModel){
+
+        List<Post> posts = postService.searchPosts(postTitle);
+
+        if(posts.size()==0){
+            theModel.addAttribute("notFoundError","Nie znaleziono postu o podanym tytule!");
+        }
+
+        theModel.addAttribute("posts",posts);
+
+
+        return "post-search-result-page";
     }
 }

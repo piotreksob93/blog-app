@@ -34,6 +34,18 @@
 <hr width="60%">
 <h1 align="center">POSTY:</h1>
 
+<div align="center">
+
+
+    <form action="/post/search" method="get">
+        <div>Szukaj postu:</div>
+        <input name="postTitle" placeholder="Podaj tytuł posta kóry szukasz" style="width: 20%"/>
+        <button type="submit" class="btn  btn-primary"><span
+                style="padding-bottom: 2px"
+                class="glyphicon glyphicon-search"></span></button>
+    </form>
+</div>
+
 
 <c:forEach var="tempPost" items="${posts}">
     <c:url var="deleteLink" value="/post/delete">
@@ -49,8 +61,12 @@
         <c:param name="username" value="${tempPost.user.userName}"/>
     </c:url>
 
+
     <div align="center">
+
+
         <form:form>
+
             <h4><strong>${tempPost.postTitle}</strong></h4>
 
             <textarea rows="5" style="border: solid thin; width: 35%; resize: none" class="form-control" type="text"
@@ -104,20 +120,20 @@
                         <a href="${userProfLink2}">${tempComment.user.userName}</a>
                             ${tempComment.editDate}
                         <p style="border: black solid thin;">${tempComment.commentContent}</p>
-                            <security:authorize
-                                    access="hasRole('ROLE_ADMIN') or ${username==tempComment.user.userName}">
-                                <c:if test="${username==tempComment.user.userName}">
-                                    <a href="${commentEditLink}" class="btn  btn-danger btn-sm"
-                                       onclick="if(!(confirm('Napewno chcesz edytować ten komentarz?'))) return false"><span
-                                            style="padding-bottom: 2px"
-                                            class="glyphicon glyphicon-edit"></span></a>
-                                </c:if>
-
-                                <a href="${commentDeleteLink}" class="btn  btn-danger btn-sm"
-                                   onclick="if(!(confirm('Napewno chcesz usunąc ten komentarz?'))) return false"><span
+                        <security:authorize
+                                access="hasRole('ROLE_ADMIN') or ${username==tempComment.user.userName}">
+                            <c:if test="${username==tempComment.user.userName}">
+                                <a href="${commentEditLink}" class="btn  btn-danger btn-sm"
+                                   onclick="if(!(confirm('Napewno chcesz edytować ten komentarz?'))) return false"><span
                                         style="padding-bottom: 2px"
-                                        class="glyphicon glyphicon-remove"></span></a>
-                            </security:authorize>
+                                        class="glyphicon glyphicon-edit"></span></a>
+                            </c:if>
+
+                            <a href="${commentDeleteLink}" class="btn  btn-danger btn-sm"
+                               onclick="if(!(confirm('Napewno chcesz usunąc ten komentarz?'))) return false"><span
+                                    style="padding-bottom: 2px"
+                                    class="glyphicon glyphicon-remove"></span></a>
+                        </security:authorize>
 
 
                     </div>
@@ -134,49 +150,8 @@
     </div>
 </c:forEach>
 
+<jsp:directive.include file="pagination.jsp"/>
 
-<%--pagination here--%>
-<c:if test="${pages>1}">
-    <div align="center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-
-                <c:if test="${currentPage==1}">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                    <c:if test="${pages>2}">
-                        <li class="page-item"><a class="page-link" href="/${currentPage+2}">${currentPage+2}</a></li>
-                    </c:if>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">Next</a></li>
-                </c:if>
-                <c:if test="${currentPage==pages}">
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <c:if test="${pages>2}">
-                        <li class="page-item"><a class="page-link" href="/${currentPage-2}">${currentPage-2}</a></li>
-                    </c:if>
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                </c:if>
-                <c:if test="${currentPage>1 and currentPage<pages}">
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item "><a class="page-link" href="/${currentPage+1}">Next</a></li>
-                </c:if>
-                <div>Strona ${currentPage} z ${pages}</div>
-            </ul>
-        </nav>
-    </div>
-</c:if>
 
 </body>
 </html>

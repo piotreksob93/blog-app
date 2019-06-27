@@ -39,6 +39,10 @@ public class MainController {
         float pages = (float)countPosts/(float)postByPage;
         List<Post> posts = postService.getPosts(pageId,postByPage);
 
+        String postTitle = new String();
+
+        theModel.addAttribute("postTitle",postTitle);
+
         theModel.addAttribute("posts",posts);
 
         theModel.addAttribute("pages",(int)Math.ceil(pages));

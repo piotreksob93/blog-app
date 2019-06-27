@@ -35,6 +35,7 @@ public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post/*").hasRole("USER")
                 .antMatchers("/user/*").hasRole("USER")
                 .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/resources/**").permitAll()
                 .and()
                 .formLogin()
                     .loginPage("/showLogin")

@@ -76,4 +76,17 @@ public class PostDaoImplementation implements PostDao {
 
         return result;
     }
+
+    @Override
+    public List<Post> searchPosts(String postTitle) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Post> query = session.createQuery("from Post where postTitle = :postTitle order by id desc",Post.class);
+        query.setParameter("postTitle",postTitle);
+
+        List<Post> posts = query.getResultList();
+
+        return posts;
+    }
 }
