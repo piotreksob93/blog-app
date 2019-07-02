@@ -5,7 +5,7 @@ import com.piotrek.myBlogApp.dao.UserDao;
 import com.piotrek.myBlogApp.entity.Role;
 import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.UserService;
-import com.piotrek.myBlogApp.user.RoleDto;
+import com.piotrek.myBlogApp.dto.RoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

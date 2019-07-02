@@ -3,7 +3,7 @@ package com.piotrek.myBlogApp.service;
 import com.piotrek.myBlogApp.dao.PostCommentsDao;
 import com.piotrek.myBlogApp.entity.PostComments;
 import com.piotrek.myBlogApp.entity.User;
-import com.piotrek.myBlogApp.user.PostCommentDto;
+import com.piotrek.myBlogApp.dto.PostCommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;

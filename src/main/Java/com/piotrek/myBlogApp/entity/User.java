@@ -43,6 +43,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<PostComments> comments;
 
+    @Column(name="avatar",columnDefinition = "longblob")
+    private byte[]avatar;
+
     public User() {
     }
 
@@ -116,5 +119,13 @@ public class User {
 
     public void setComments(List<PostComments> comments) {
         this.comments = comments;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }

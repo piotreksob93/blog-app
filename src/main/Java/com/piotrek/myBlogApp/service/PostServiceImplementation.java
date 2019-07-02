@@ -3,7 +3,7 @@ package com.piotrek.myBlogApp.service;
 import com.piotrek.myBlogApp.dao.PostDao;
 import com.piotrek.myBlogApp.entity.Post;
 import com.piotrek.myBlogApp.entity.User;
-import com.piotrek.myBlogApp.user.BlogPost;
+import com.piotrek.myBlogApp.dto.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;

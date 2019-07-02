@@ -1,7 +1,7 @@
 package com.piotrek.myBlogApp.service;
 
 import com.piotrek.myBlogApp.entity.PostComments;
-import com.piotrek.myBlogApp.user.PostCommentDto;
+import com.piotrek.myBlogApp.dto.PostCommentDto;
 import org.springframework.security.core.Authentication;
 
 public interface PostCommentsService {

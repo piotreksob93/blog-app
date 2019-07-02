@@ -1,4 +1,4 @@
-package com.piotrek.myBlogApp.user;
+package com.piotrek.myBlogApp.dto;
 
 public class RoleDto {
 

@@ -1,7 +1,7 @@
 package com.piotrek.myBlogApp.service;
 
 import com.piotrek.myBlogApp.entity.Post;
-import com.piotrek.myBlogApp.user.BlogPost;
+import com.piotrek.myBlogApp.dto.BlogPost;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

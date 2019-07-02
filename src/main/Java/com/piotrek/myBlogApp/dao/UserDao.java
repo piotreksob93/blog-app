@@ -1,6 +1,7 @@
 package com.piotrek.myBlogApp.dao;
 
 import com.piotrek.myBlogApp.entity.User;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface UserDao {
     void updatePassword(String password,String username);
 
     List<User> getUsers();
+
+    void updateAvatar(int userId, byte[] aFile);
+
+    void deleteAvatar(int userId);
 }

@@ -1,4 +1,4 @@
-package com.piotrek.myBlogApp.user;
+package com.piotrek.myBlogApp.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

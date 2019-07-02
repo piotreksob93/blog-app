@@ -3,7 +3,7 @@ package com.piotrek.myBlogApp.controller;
 import com.piotrek.myBlogApp.entity.PostComments;
 import com.piotrek.myBlogApp.service.PostCommentsService;
 import com.piotrek.myBlogApp.service.PostService;
-import com.piotrek.myBlogApp.user.PostCommentDto;
+import com.piotrek.myBlogApp.dto.PostCommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;

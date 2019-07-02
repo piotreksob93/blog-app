@@ -31,6 +31,9 @@
         <form:hidden path="firstName"/>
         <form:hidden path="lastName"/>
         <form:hidden path="email"/>
+        <form:hidden path="stringAvatar"/>
+        <form:hidden path="avatar"/>
+
 
 
         <c:forEach items="${user.role}" var="tempRole" varStatus="st">
@@ -51,7 +54,15 @@
             <%--            <form:hidden path="posts[${st.index}].postContent"/>--%>
             <%--        </c:forEach>--%>
         <div class="form-group" align="center">
-            <img src="${pageContext.request.contextPath}/resources/images/default-profile-image2.jpg" style="max-width: 300px;">
+            <c:choose>
+                <c:when test="${user.stringAvatar.length()==0}">
+                    <img src="${pageContext.request.contextPath}/resources/images/default-profile-image2.jpg" style="max-width: 300px;">
+                </c:when>
+                <c:otherwise>
+                    <img src="data:image/png;base64,${user.stringAvatar}" style="max-width: 300px;" />
+                </c:otherwise>
+            </c:choose>
+
         </div>
         <div class="form-group">
             <label>Username:</label>

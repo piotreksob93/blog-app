@@ -1,4 +1,4 @@
-package com.piotrek.myBlogApp.user;
+package com.piotrek.myBlogApp.dto;
 
 import com.piotrek.myBlogApp.entity.Post;
 import com.piotrek.myBlogApp.entity.User;
