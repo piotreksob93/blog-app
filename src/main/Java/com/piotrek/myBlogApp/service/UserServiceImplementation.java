@@ -4,18 +4,17 @@ import com.piotrek.myBlogApp.dao.RoleDao;
 import com.piotrek.myBlogApp.dao.UserDao;
 import com.piotrek.myBlogApp.entity.Role;
 import com.piotrek.myBlogApp.entity.User;
-import com.piotrek.myBlogApp.user.BlogUser;
+import com.piotrek.myBlogApp.dto.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,6 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private RoleDao roleDao;
-
 
 
     @Override
@@ -54,8 +52,7 @@ public class UserServiceImplementation implements UserService {
 
         if (theBlogUser.getRole() == null) {
             user.setRole(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
-        }
-        else{
+        } else {
             user.setRole(theBlogUser.getRole());
         }
 
@@ -63,7 +60,32 @@ public class UserServiceImplementation implements UserService {
             user.setPosts(theBlogUser.getPosts());
         }
 
+
         userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(String password, String username) {
+        userDao.updatePassword(password, username);
+    }
+
+    @Override
+    @Transactional
+    public List<User> getUsers() {
+        return userDao.getUsers();
+    }
+
+    @Override
+    @Transactional
+    public void updateAvatar(int userId, byte[] aFile) {
+        userDao.updateAvatar(userId, aFile);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAvatar(int userId) {
+        userDao.deleteAvatar(userId);
     }
 
     @Override

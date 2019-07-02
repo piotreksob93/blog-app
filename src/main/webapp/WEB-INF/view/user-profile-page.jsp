@@ -31,6 +31,9 @@
         <form:hidden path="firstName"/>
         <form:hidden path="lastName"/>
         <form:hidden path="email"/>
+        <form:hidden path="stringAvatar"/>
+        <form:hidden path="avatar"/>
+
 
 
         <c:forEach items="${user.role}" var="tempRole" varStatus="st">
@@ -43,14 +46,24 @@
         </c:forEach>
 
 
-<%--        <c:forEach items="${user.posts}" varStatus="st">--%>
-<%--            <form:hidden path="posts[${st.index}].id"/>--%>
-<%--            <form:hidden path="posts[${st.index}].user.id"/>--%>
-<%--            <form:hidden path="posts[${st.index}].editDate"/>--%>
-<%--            <form:hidden path="posts[${st.index}].postTitle"/>--%>
-<%--            <form:hidden path="posts[${st.index}].postContent"/>--%>
-<%--        </c:forEach>--%>
+            <%--        <c:forEach items="${user.posts}" varStatus="st">--%>
+            <%--            <form:hidden path="posts[${st.index}].id"/>--%>
+            <%--            <form:hidden path="posts[${st.index}].user.id"/>--%>
+            <%--            <form:hidden path="posts[${st.index}].editDate"/>--%>
+            <%--            <form:hidden path="posts[${st.index}].postTitle"/>--%>
+            <%--            <form:hidden path="posts[${st.index}].postContent"/>--%>
+            <%--        </c:forEach>--%>
+        <div class="form-group" align="center">
+            <c:choose>
+                <c:when test="${user.stringAvatar.length()==0}">
+                    <img src="${pageContext.request.contextPath}/resources/images/default-profile-image2.jpg" style="max-width: 300px;">
+                </c:when>
+                <c:otherwise>
+                    <img src="data:image/png;base64,${user.stringAvatar}" style="max-width: 300px;" />
+                </c:otherwise>
+            </c:choose>
 
+        </div>
         <div class="form-group">
             <label>Username:</label>
             <ul class="list-group">
@@ -88,6 +101,14 @@
             </ul>
         </div>
 
+
+        <%-- link do panelu admina --%>
+        <div style="display: flex; align-items: center; padding: 5px; justify-content: center;">
+            <security:authorize access="hasRole('ROLE_ADMIN') and ${user.userName==username}">
+                <a href="${pageContext.request.contextPath}/admin/panel" class="btn btn-warning">Panel administratora</a>
+            </security:authorize>
+        </div>
+
         <div style="display: flex; align-items: center; padding: 5px; justify-content: center;">
             <c:if test="${user.userName==username}">
                 <button type="submit" class="btn btn-primary" style="margin-right: 1rem">Edytuj dane</button>
@@ -100,14 +121,16 @@
             <div class="form-group">
                 <h2>POSTY UŻYTKOWNIKA:</h2>
                 <ul class="list-group">
-                    <li class="list-group-item" style="background: #337ab7; color: white;">LP | Data dodania postu | Tytuł posta</li>
+                    <li class="list-group-item" style="background: #337ab7; color: white;">LP | Data dodania postu |
+                        Tytuł posta
+                    </li>
                     <c:forEach items="${user.posts}" var="tempPost" varStatus="status">
-                        <li class="list-group-item"> ${status.index+1}) | ${tempPost.editDate} | ${tempPost.postTitle}</li>
+                        <li class="list-group-item"> ${status.index+1}) | ${tempPost.editDate}
+                            | ${tempPost.postTitle}</li>
                     </c:forEach>
                 </ul>
             </div>
         </c:if>
-
 
     </div>
 </div>

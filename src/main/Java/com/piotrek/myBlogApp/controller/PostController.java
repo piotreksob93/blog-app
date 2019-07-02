@@ -1,9 +1,8 @@
 package com.piotrek.myBlogApp.controller;
 
 import com.piotrek.myBlogApp.entity.Post;
-import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.PostService;
-import com.piotrek.myBlogApp.user.BlogPost;
+import com.piotrek.myBlogApp.dto.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -50,14 +50,14 @@ public class PostController {
 
         postService.save(thePost,authentication);
 
-        return "redirect:/1";
+        return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String deletePost(@RequestParam("postId") int theId){
 
         postService.delete(theId);
-        return "redirect:/1";
+        return "redirect:/";
     }
 
     @GetMapping("/edit")
@@ -67,5 +67,20 @@ public class PostController {
 
         theModel.addAttribute("post",thePost);
         return "post-create-page";
+    }
+
+    @GetMapping("/search")
+    public String showPostSearchResultPage(@RequestParam ("postTitle") String postTitle,Model theModel){
+
+        List<Post> posts = postService.searchPosts(postTitle);
+
+        if(posts.size()==0){
+            theModel.addAttribute("notFoundError","Nie znaleziono postu o podanym tytule!");
+        }
+
+        theModel.addAttribute("posts",posts);
+
+
+        return "post-search-result-page";
     }
 }

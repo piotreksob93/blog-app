@@ -17,4 +17,6 @@ public interface PostDao {
     List<Post> getPosts(int pageId, int postByPage);
 
     long countPosts();
+
+    List<Post> searchPosts(String postTitle);
 }

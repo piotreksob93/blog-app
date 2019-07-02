@@ -1,4 +1,4 @@
-package com.piotrek.myBlogApp.user;
+package com.piotrek.myBlogApp.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,7 +9,7 @@ public class BlogPost {
     private int id;
 
     @NotNull(message = "Post musi miec tytul")
-    @Size(min = 1,message = "Post musi miec tytul")
+    @Size(min = 1, max=255, message = "Tytul musi znajdować się w przedziale od 1 do 255 znakow")
     private String postTitle;
 
     @NotNull(message = "Post musi miec tresc")
