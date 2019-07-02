@@ -2,7 +2,7 @@ package com.piotrek.myBlogApp.controller;
 
 import com.piotrek.myBlogApp.entity.User;
 import com.piotrek.myBlogApp.service.UserService;
-import com.piotrek.myBlogApp.user.BlogUser;
+import com.piotrek.myBlogApp.dto.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

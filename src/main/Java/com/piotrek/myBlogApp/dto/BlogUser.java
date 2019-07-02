@@ -1,4 +1,4 @@
-package com.piotrek.myBlogApp.user;
+package com.piotrek.myBlogApp.dto;
 
 import com.piotrek.myBlogApp.entity.Post;
 import com.piotrek.myBlogApp.entity.Role;
@@ -7,7 +7,7 @@ import com.piotrek.myBlogApp.validation.FieldMatch;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
+import java.util.Base64;
 import java.util.List;
 
 @FieldMatch.List({
@@ -46,6 +46,9 @@ public class BlogUser {
 
     private List<Post> posts;
 
+    private byte[]avatar;
+
+    private String stringAvatar;
 
     public BlogUser() {
 
@@ -121,5 +124,29 @@ public class BlogUser {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getStringAvatar() {
+        return convertBinImageToString(avatar);
+    }
+
+    public void setStringAvatar(String stringAvatar) {
+        this.stringAvatar = stringAvatar;
+    }
+
+    public static String convertBinImageToString(byte[] binImage) {
+        if(binImage!=null && binImage.length>0) {
+            return Base64.getEncoder().encodeToString(binImage);
+        }
+        else
+            return "";
     }
 }

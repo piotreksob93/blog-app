@@ -6,6 +6,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.util.List;
 
 @Repository
 public class UserDaoImplementation implements UserDao {
@@ -37,5 +40,43 @@ public class UserDaoImplementation implements UserDao {
     session.merge(user);
     session.flush();
 
+    }
+
+    @Override
+    public void updatePassword(String password,String username) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("update User set password = :pass  where userName= :name");
+        query.setParameter("pass",password);
+        query.setParameter("name",username);
+        query.executeUpdate();
+    }
+
+    @Override
+    public List<User> getUsers() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query =session.createQuery("from User ",User.class);
+        List<User> users = query.getResultList();
+        return users;
+    }
+
+    @Override
+    public void updateAvatar(int userId, byte[] aFile) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("update User set avatar = :avatar  where id= :userId");
+        query.setParameter("userId",userId);
+        query.setParameter("avatar",aFile);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deleteAvatar(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("update User set avatar = null  where id= :userId");
+        query.setParameter("userId",userId);
+        query.executeUpdate();
     }
 }

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Piotrek
-  Date: 20.05.2019
-  Time: 10:42
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,20 +18,33 @@
     <c:url var="userProfLink" value="/user/profile">
         <c:param name="username" value="${username}"/>
     </c:url>
+
+
     Jesteś zalogowany jako: <a href="${userProfLink}">${username}</a><br>
     Twoje role to: <security:authentication property="principal.authorities"/><br>
+
     <form:form action="${pageContext.request.contextPath}/logout" method="post">
         <input type="submit" value="Logout" class="btn btn-default btn-sm">
     </form:form>
+
     <a href="${pageContext.request.contextPath}/post/new" class="btn btn-primary btn-sm">Nowy post</a>
 </div>
-<security:authentication property="principal.username" var="username"/>
 
 
 <hr width="60%">
 <h1 align="center">POSTY:</h1>
 
+<div align="center">
 
+
+    <form action="/post/search" method="get">
+        <div>Szukaj postu:</div>
+        <input name="postTitle" placeholder="Podaj tytuł posta kóry szukasz" style="width: 20%"/>
+        <button type="submit" class="btn  btn-primary"><span
+                style="padding-bottom: 2px"
+                class="glyphicon glyphicon-search"></span></button>
+    </form>
+</div>
 
 
 <c:forEach var="tempPost" items="${posts}">
@@ -48,82 +54,104 @@
     <c:url var="editLink" value="/post/edit">
         <c:param name="postId" value="${tempPost.id}"/>
     </c:url>
+    <c:url var="commentLink" value="/comment/new">
+        <c:param name="postId" value="${tempPost.id}"/>
+    </c:url>
     <c:url var="userProfLink" value="/user/profile">
         <c:param name="username" value="${tempPost.user.userName}"/>
     </c:url>
 
 
     <div align="center">
+
+
         <form:form>
+
             <h4><strong>${tempPost.postTitle}</strong></h4>
 
             <textarea rows="5" style="border: solid thin; width: 35%; resize: none" class="form-control" type="text"
                       readonly>${tempPost.postContent}</textarea>
 
-            <security:authorize access="hasRole('ROLE_ADMIN') or ${username==tempPost.user.userName}">
-                <p style="margin-top: 5px;">
+            <p style="margin-top: 5px;">
+                <security:authorize access="hasRole('ROLE_ADMIN') or ${username==tempPost.user.userName}">
+
                     <c:if test="${username==tempPost.user.userName}">
                         <a href="${editLink}" class="btn  btn-danger"
                            onclick="if(!(confirm('Napewno chcesz edytować ten post?'))) return false"><span
-                                class="glyphicon glyphicon-edit"></span>Edytuj</a>
+                                class="glyphicon glyphicon-edit"></span> Edytuj</a>
                     </c:if>
                     <a href="${deleteLink}" class="btn  btn-danger"
                        onclick="if(!(confirm('Napewno chcesz usunąc ten post?'))) return false"><span
-                            class="glyphicon glyphicon-remove"></span>Usuń</a>
-                </p>
-            </security:authorize>
+                            class="glyphicon glyphicon-remove"></span> Usuń</a>
+                </security:authorize>
+                <a href="${commentLink}" class="btn  btn-primary"
+                   onclick="if(!(confirm('Napewno chcesz skomentować ten post?'))) return false"><span
+                        class="glyphicon glyphicon-comment"></span> Skomentuj</a>
+            </p>
+
             <p>
                 <label>Dodano dnia :</label>${tempPost.editDate}
                 <label style="padding-left: 80px">Autor:</label> <a href="${userProfLink}">${tempPost.user.userName}</a>
             </p>
+
+
+            <%--            Comments here--%>
+            <div>
+
+
+                <c:if test="${tempPost.postComments.size()>2}">
+                    <c:set var="commentsNumber" value="${tempPost.postComments.size()-2}"/>
+                </c:if>
+
+
+                <c:forEach items="${tempPost.postComments}" begin="${commentsNumber}" var="tempComment">
+                    <c:url var="userProfLink2" value="/user/profile">
+                        <c:param name="username" value="${tempComment.user.userName}"/>
+                    </c:url>
+                    <c:url var="commentDeleteLink" value="/comment/delete">
+                        <c:param name="commentId" value="${tempComment.id}"/>
+                    </c:url>
+                    <c:url var="commentEditLink" value="/comment/edit">
+                        <c:param name="commentId" value="${tempComment.id}"/>
+                    </c:url>
+
+                    <div class="container" style="padding-bottom: 10px; width: 25%;">
+
+                        <a href="${userProfLink2}">${tempComment.user.userName}</a>
+                            ${tempComment.editDate}
+                        <p style="border: black solid thin;">${tempComment.commentContent}</p>
+                        <security:authorize
+                                access="hasRole('ROLE_ADMIN') or ${username==tempComment.user.userName}">
+                            <c:if test="${username==tempComment.user.userName}">
+                                <a href="${commentEditLink}" class="btn  btn-danger btn-sm"
+                                   onclick="if(!(confirm('Napewno chcesz edytować ten komentarz?'))) return false"><span
+                                        style="padding-bottom: 2px"
+                                        class="glyphicon glyphicon-edit"></span></a>
+                            </c:if>
+
+                            <a href="${commentDeleteLink}" class="btn  btn-danger btn-sm"
+                               onclick="if(!(confirm('Napewno chcesz usunąc ten komentarz?'))) return false"><span
+                                    style="padding-bottom: 2px"
+                                    class="glyphicon glyphicon-remove"></span></a>
+                        </security:authorize>
+
+
+                    </div>
+                </c:forEach>
+                <c:url var="commentListLink" value="/comment/list">
+                    <c:param name="postId" value="${tempPost.id}"/>
+                </c:url>
+                <c:if test="${tempPost.postComments.size()>0}">
+                    <a href="${commentListLink}">Pokaż wszystkie komentarze(${tempPost.postComments.size()})</a>
+                </c:if>
+            </div>
         </form:form>
         <hr style="width: 45%;">
     </div>
 </c:forEach>
 
+<jsp:directive.include file="pagination.jsp"/>
 
-<!-- pagination here -->
-<c:if test="${pages>1}">
-    <div  align="center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-
-                <c:if test="${currentPage==1}">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                    <c:if test="${pages>2}">
-                        <li class="page-item"><a class="page-link" href="/${currentPage+2}">${currentPage+2}</a></li>
-                    </c:if>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">Next</a></li>
-                </c:if>
-                <c:if test="${currentPage==pages}">
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <c:if test="${pages>2}">
-                        <li class="page-item"><a class="page-link" href="/${currentPage-2}">${currentPage-2}</a></li>
-                    </c:if>
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                </c:if>
-                <c:if test="${currentPage>1 and currentPage<pages}">
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/1">First</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage-1}">${currentPage-1}</a></li>
-                    <li class="page-item active"><a class="page-link" href="/${currentPage}">${currentPage}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${currentPage+1}">${currentPage+1}</a></li>
-                    <li class="page-item"><a class="page-link" href="/${pages}">Last</a></li>
-                    <li class="page-item "><a class="page-link" href="/${currentPage+1}">Next</a></li>
-                </c:if>
-                <div>Strona ${currentPage} z ${pages}</div>
-            </ul>
-        </nav>
-    </div>
-</c:if>
 
 </body>
 </html>
